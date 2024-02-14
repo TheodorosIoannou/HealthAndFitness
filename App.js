@@ -31,7 +31,7 @@ export default function App() {
         component={DashboardScreen} 
         options={{
           drawerIcon: ({color, size}) => 
-          <Ionicons name= 'dashboard' color={color} size={size}/>
+          <Ionicons name= 'bar-chart-outline' color={color} size={size}/>
         }} />
 
       <Drawer.Screen 
@@ -39,7 +39,7 @@ export default function App() {
         component={MyGoalsScreen} 
         options={{
           drawerIcon: ({color, size}) => 
-          <Ionicons name= 'Goals' color={color} size={size}/>
+          <Ionicons name= 'create-outline' color={color} size={size}/>
         }} />
 
 
@@ -48,7 +48,7 @@ export default function App() {
         component={MyRewardsScreen} 
         options={{
           drawerIcon: ({color, size}) => 
-          <Ionicons name= 'Rewards' color={color} size={size}/>
+          <Ionicons name= 'ribbon-outline' color={color} size={size}/>
         }} />
 
 <Drawer.Screen 
@@ -56,7 +56,7 @@ export default function App() {
         component={MyRunningScreen} 
         options={{
           drawerIcon: ({color, size}) => 
-          <Ionicons name= 'RunningScreen' color={color} size={size}/>
+          <Ionicons name= 'walk-outline' color={color} size={size}/>
         }} />
 
 <Drawer.Screen 
@@ -64,7 +64,7 @@ export default function App() {
         component={MyWaterIntakeScreen} 
         options={{
           drawerIcon: ({color, size}) => 
-          <Ionicons name= 'WaterIntake' color={color} size={size}/>
+          <Ionicons name= 'water-outline' color={color} size={size}/>
         }} />
       </Drawer.Navigator>
     </NavigationContainer>
