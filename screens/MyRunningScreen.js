@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const MyRunningScreen = () => {
+const DashboardScreen = () => {
   return (
     <View style={styles.container}>
       <Text>Dashboard Screen</Text>
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyRunningScreen;
+export default DashboardScreen;

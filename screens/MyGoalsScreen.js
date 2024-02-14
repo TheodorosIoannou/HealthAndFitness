@@ -1,11 +1,23 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const MyGoalsScreen = () => {
+  const [fitnessGoal, setFitnessGoal] = useState('');
+
+  const handleSetGoal = () => {
+    // Implement logic to set fitness goal
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Dashboard Screen</Text>
-      {/* Add components for fitness metrics */}
+      <Text>My Goals Screen</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Set your fitness goal"
+        value={fitnessGoal}
+        onChangeText={(text) => setFitnessGoal(text)}
+      />
+      <Button title="Set Goal" onPress={handleSetGoal} />
     </View>
   );
 };
@@ -15,6 +27,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
   },
 });
 

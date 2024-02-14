@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const MyRewardsScreen = () => {
+const RewardsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>Dashboard Screen</Text>
-      {/* Add components for fitness metrics */}
+      <Text>Rewards Screen</Text>
+      {/* Add components for displaying rewards */}
     </View>
   );
 };
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyRewardsScreen;
+export default RewardsScreen;

@@ -1,11 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-const MyWaterIntakeScreen = () => {
+const WaterIntakeScreen = () => {
+  const [waterIntake, setWaterIntake] = useState('');
+
+  const handleLogWater = () => {
+    // Implement logic to log water intake
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Dashboard Screen</Text>
-      {/* Add components for fitness metrics */}
+      <Text>Water Intake Screen</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter water intake (ml)"
+        keyboardType="numeric"
+        value={waterIntake}
+        onChangeText={(text) => setWaterIntake(text)}
+      />
+      <Button title="Log Water" onPress={handleLogWater} />
     </View>
   );
 };
@@ -16,6 +29,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
 });
 
-export default MyWaterIntakeScreen;
+export default WaterIntakeScreen;

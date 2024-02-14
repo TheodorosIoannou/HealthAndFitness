@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+/*import { StyleSheet } from 'react-native';
 
 export const Styles = StyleSheet.create({
   container: {
@@ -30,3 +30,4 @@ export const Styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+*/
