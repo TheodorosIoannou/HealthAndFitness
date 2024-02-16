@@ -4,6 +4,8 @@ import { Button, TouchableOpacity, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Ionicons } from '@expo/vector-icons';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 import DashboardScreen from './screens/DashboardScreen';
 import MyRunningScreen from './screens/MyRunningScreen';
@@ -17,14 +19,15 @@ const Drawer = createDrawerNavigator();
 export default function App() {
   return (
     <NavigationContainer
-    screenOptions={{
-    headerLeft: () => (
-      <TouchableOpacity  activeOpacity={0.5}>
-        <Image
-          source={require('./icons/logo.png')}
-        />
-      </TouchableOpacity>
-    ),}}
+      screenOptions={{
+        headerLeft: () => (
+          <TouchableOpacity activeOpacity={0.5}>
+            <Image
+              source={require('./icons/logo.png')}
+            />
+          </TouchableOpacity>
+        ),
+      }}
     >
       <Drawer.Navigator
         screenOptions={{
@@ -33,8 +36,8 @@ export default function App() {
           drawerActiveBackgroundColor: '#f00e1ff',
           drawerActiveTintColor: '#3c0a6b',
           drawerStyle: { backgroundColor: '#ccc' },
-         
-          }
+
+        }
         }
       >
         <Drawer.Screen

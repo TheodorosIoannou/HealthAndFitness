@@ -11,7 +11,7 @@ const DashboardScreen = () => {
           <Icon name="check" size={40} color="white" />
         </View>
         {/* Add components for my goals */}
-          <Text style={styles.sectionTitle}>Goals</Text>
+        <Text style={styles.sectionTitle}>Goals</Text>
         <Text style={styles.sectionBody}>Running:</Text>
         <Text style={styles.sectionBody}>15/35 km</Text>
         <Text></Text>
@@ -37,7 +37,7 @@ const DashboardScreen = () => {
         <View style={styles.iconContainer}>
           <Icon name="tint" size={40} color="white" />
         </View>
-        {/* Add components for water intake */}        
+        {/* Add components for water intake */}
         <Text style={styles.sectionTitle}>Water Intake</Text>
         <Text style={styles.sectionBody}>Total Water Consumed:</Text>
         <Text style={styles.sectionTitle}>200 L</Text>
@@ -54,7 +54,7 @@ const DashboardScreen = () => {
         <View style={styles.iconContainer}>
           <Icon name="medal" size={40} color="white" />
         </View>
-        
+
         {/* Add components for badges */}
         <Text style={styles.sectionTitle}>Rewards</Text>
         <Text style={styles.sectionBody}>Received the: </Text>
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-   
+
   },
   sectionContainer: {
     flex: 1,
