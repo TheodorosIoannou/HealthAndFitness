@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+// eslint-disable-next-line react/unsafe-component-lifecycles
+
 
 const MyGoalsScreen = () => {
   const [runningGoal, setRunningGoal] = useState('');
@@ -74,8 +76,8 @@ const MyGoalsScreen = () => {
 
       {/* Weekly Analysis Section */}
       <View style={[styles.goalSection, styles.grayBackground]}>
-      <Text style={[styles.heading, { textAlign: 'center', alignSelf: 'center' }]}>Weekly Analysis</Text>
-       
+      <Text style={[styles.heading, { textAlign: 'center', alignSelf: 'center', textDecorationLine: 'underline'  }]}>Analysis</Text>
+      <Text style={[styles.heading, { textAlign: 'left', }]}> This week</Text>
         <View style={styles.analysisContainer}>
           <Text style={styles.body}>Running Goal: </Text>
           <View style={styles.iconContainer}>
