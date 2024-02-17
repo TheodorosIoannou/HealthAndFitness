@@ -12,7 +12,7 @@ const MyGoalsScreen = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    
     <View style={[styles.container, styles.centerContainer]}>
        <View style={[styles.goalSection, styles.orangeBackground]}>
       <DatePicker
@@ -97,7 +97,7 @@ const MyGoalsScreen = () => {
 
       </View>
     </View>
-    </ScrollView>
+
   );
 };
 
