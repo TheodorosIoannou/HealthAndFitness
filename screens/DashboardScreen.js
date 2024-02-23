@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const DashboardScreen = () => {
