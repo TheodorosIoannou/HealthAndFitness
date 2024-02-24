@@ -4,7 +4,9 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const DashboardScreen = () => {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.title}>
+      <Text style={styles.title}> <Icon name="tachometer-alt" size={20} color="black" /> Dashboard</Text>
+      <ScrollView contentContainerStyle={styles.container}>
       <View style={[styles.sectionContainer, { backgroundColor: '#EF583F' }]}>
         <View style={styles.iconContainer}>
           <Icon name="check" size={40} color="white" />
@@ -62,10 +64,18 @@ const DashboardScreen = () => {
         <Text style={styles.sectionBody}>This section provides to the user rewards details</Text>
       </View>
     </ScrollView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  title: {
+    marginTop:10,
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+
   container: {
     flexGrow: 1,
     justifyContent: 'center',

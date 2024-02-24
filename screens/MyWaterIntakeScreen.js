@@ -10,6 +10,8 @@ const MyWaterIntakeScreen = () => {
   };
 
   return (
+    <ScrollView contentContainerStyle={styles.title}>
+    <Text style={styles.title}> <Icon name="tint" size={20} color="black" /> My Water Intake</Text>
     <ScrollView contentContainerStyle={styles.container}>
     <View style={styles.container}>
       <View style={[styles.sectionContainer, { backgroundColor: '#0089FF' }]}>
@@ -29,11 +31,20 @@ const MyWaterIntakeScreen = () => {
         <Text style={styles.sectionBody}>This section allows you to log your water intake.</Text>
       </View>
     </View>
-    </ScrollView>
+    </ScrollView></ScrollView>
+
   );
 };
 
 const styles = StyleSheet.create({
+  title: {
+    marginTop:10,
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
+    
+  },
+
   container: {
     flexGrow: 1,
     justifyContent: 'center',
