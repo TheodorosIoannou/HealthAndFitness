@@ -11,38 +11,37 @@ const MyWaterIntakeScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.title}>
-    <Text style={styles.title}> <Icon name="tint" size={20} color="black" /> My Water Intake</Text>
-    <ScrollView contentContainerStyle={styles.container}>
-    <View style={styles.container}>
-      <View style={[styles.sectionContainer, { backgroundColor: '#0089FF' }]}>
-        <View style={styles.iconContainer}>
-          <Icon name="tint" size={30} color="white" />
+      <Text style={styles.title}> <Icon name="tint" size={20} color="black" /> My Water Intake</Text>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
+          <View style={[styles.sectionContainer, { backgroundColor: '#0089FF' }]}>
+            <View style={styles.iconContainer}>
+
+            </View>
+            {/* Add components for water intake */}
+            <TextInput
+              style={styles.input}
+              placeholder="Enter water intake (ml)"
+              keyboardType="numeric"
+              value={waterIntake}
+              onChangeText={(text) => setWaterIntake(text)}
+            />
+            <Button title="Log Water" onPress={handleLogWater} />
+            <Text style={styles.sectionBody}>This section allows you to log your water intake.</Text>
+          </View>
         </View>
-        {/* Add components for water intake */}
-        <Text style={styles.sectionTitle}>Water Intake</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter water intake (ml)"
-          keyboardType="numeric"
-          value={waterIntake}
-          onChangeText={(text) => setWaterIntake(text)}
-        />
-        <Button title="Log Water" onPress={handleLogWater} />
-        <Text style={styles.sectionBody}>This section allows you to log your water intake.</Text>
-      </View>
-    </View>
-    </ScrollView></ScrollView>
+      </ScrollView></ScrollView>
 
   );
 };
 
 const styles = StyleSheet.create({
   title: {
-    marginTop:10,
+    marginTop: 10,
     color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
-    
+
   },
 
   container: {
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
     color: 'white',
     marginTop: 10, // Increased margin top
   },
-  
+
   input: {
     height: 40,
     width: '100%', // Adjust width to 100%

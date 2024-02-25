@@ -13,7 +13,7 @@ const MyGoalsScreen = () => {
   };
   return (
     <ScrollView contentContainerStyle={styles.title}>
-      <Text style={styles.title}> <Icon name="pen" size={20} color="black" /> Goals</Text>
+      <Text style={styles.title}> <Icon name="pen" size={20} color="black" /> My Goals</Text>
     <ScrollView contentContainerStyle={styles.container}>
       <View style={[styles.container, styles.centerContainer]}>
         <View style={[styles.goalSection, styles.orangeBackground]}>

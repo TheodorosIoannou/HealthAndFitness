@@ -12,7 +12,7 @@ const MyRunningScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}> <Icon name="running" size={20} color="black" /> Running</Text>
+      <Text style={styles.title}> <Icon name="running" size={20} color="black" /> My Running</Text>
       <View style={[styles.container, styles.centerContainer]}>
         <View style={[styles.goalSection, styles.greenBackground]}>
           <DatePicker
