@@ -36,32 +36,8 @@ const MyRunningScreen = () => {
           />
           <Text></Text>
           <View style={styles.flexContainer}>
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Add distance goal (km)"
-              value={runningGoal}
-              onChangeText={(text) => setRunningGoal(text)}
-            />
-            <TouchableOpacity style={styles.addButton} onPress={handleSetRunningGoal}>
-              <Text style={styles.buttonText}>+</Text>
-            </TouchableOpacity>
-          </View>
-          <Text></Text>
-          <Text style={styles.heading}>Water Intake</Text>
-          <View style={styles.flexContainer}>
-          </View>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.input}
-              placeholder="Add water intake goal (ml)"
-              value={runningGoal}
-              onChangeText={(text) => setRunningGoal(text)}
-            />
-            <TouchableOpacity style={styles.addButton} onPress={handleSetRunningGoal}>
-              <Text style={styles.buttonText}>+</Text>
-            </TouchableOpacity>
+         {/* Add Running Tracker Section */}
+          
           </View>
         </View>
 
