@@ -113,7 +113,7 @@ function MyWaterIntakeStack({ navigation }) {
       }}
     >
       <Stack.Screen
-        name="MyWaterIntakeStack"
+        name="DashboardStack"
         component={MyWaterIntakeScreen}
         options={{
           headerShown: true,
