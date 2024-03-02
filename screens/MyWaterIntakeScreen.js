@@ -48,7 +48,7 @@ const MyWaterIntakeScreen = () => {
   const calculateProgress = () => {
     const consumed = calculateTotalWaterConsumed();
     return Math.min((consumed / totalWaterGoal) * 60, 60); // Ensure progress does not exceed 100%
-    
+
   };
 
   return (
@@ -61,6 +61,7 @@ const MyWaterIntakeScreen = () => {
         <TextInput
           style={styles.input}
           placeholder="Enter water intake (ml)"
+          placeholderTextColor="white"
           keyboardType="numeric"
           value={waterIntake}
           onChangeText={(text) => {
@@ -68,11 +69,30 @@ const MyWaterIntakeScreen = () => {
             setError(''); // Clear the error when user starts typing
           }}
         />
-        <Button title="Log Water" onPress={handleLogWater} />
+        <Button
+          title="Log Water"
+          onPress={handleLogWater}
+          color="#FF7E08"
+                    style={styles.logButton}
+
+        />
         {loading && <View style={styles.loadingOverlay} />}
         {error !== '' && <Text style={styles.errorText}>{error}</Text>}
-        <Text style={styles.sectionBody}>This section allows you to log your water intake.</Text>
+      
+      {/* Display tips in a table-like structure */}
+      <View style={styles.tableContainer}>
+        <Text style={styles.tableHeader}>Tips:</Text>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}> A normal glass of water equals to 240 ml.</Text>
+        </View>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableCell}> A small bottle of water equals to 250 ml.</Text>
+        </View>
       </View>
+      </View>
+       
+
+          
 
       {/* Display logged water intake */}
       <View style={styles.sectionContainer}>
@@ -101,6 +121,27 @@ const MyWaterIntakeScreen = () => {
           {`Total: ${calculateTotalWaterConsumed()} ml / Goal: ${totalWaterGoal} ml`}
         </Text>
       </View>
+
+      {/* Analysis Section */}
+      <View style={styles.analysisContainer}>
+        <Text style={styles.analysisTitle}>Analysis</Text>
+        <View style={styles.analysisInfoContainer}>
+          <View style={styles.analysisInfo}>
+            <Text style={styles.analysisLabel}>Intake:</Text>
+            <Text style={styles.analysisValue}>{`${calculateTotalWaterConsumed()} ml`}</Text>
+          </View>
+          <View style={styles.separator} />
+          <View style={styles.analysisInfo}>
+            <Text style={styles.analysisLabel}>Target:</Text>
+            <Text style={styles.analysisValue}>{`${totalWaterGoal} ml`}</Text>
+          </View>
+          <View style={styles.separator} />
+          <View style={styles.analysisInfo}>
+            <Text style={styles.analysisLabel}>Percentage:</Text>
+            <Text style={styles.analysisValue}>{`${calculateProgress()}%`}</Text>
+          </View>
+        </View>
+      </View>
     </ScrollView>
   );
 };
@@ -115,7 +156,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    textAlign: 'center',
   },
   sectionContainer: {
     backgroundColor: '#0089FF',
@@ -133,6 +173,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'white',
     marginTop: 10,
+    marginBottom: 10,
+
   },
   input: {
     height: 40,
@@ -155,6 +197,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
+
   logText: {
     color: 'white',
     fontSize: 16,
@@ -192,6 +235,69 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
   },
+  separator: {
+    height: '100%',
+    width: 1,
+    backgroundColor: 'white', // White line separating each piece of information
+    marginHorizontal: 10, // Adjust the spacing as needed
+  },
+
+  // Additional styles for the Analysis Section
+  analysisContainer: {
+    backgroundColor: '#444444', // Darker grey background color
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'black', // Black thin outline
+  },
+  analysisTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'white', // White text color
+    textAlign: 'center',
+    textDecorationLine: 'underline', // Underline the title
+  },
+  analysisInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
+  analysisInfo: {
+    alignItems: 'center',
+  },
+  analysisLabel: {
+    fontSize: 16,
+    color: 'white', // White text color
+    marginBottom: 5,
+  },
+  analysisValue: {
+    fontSize: 16,
+    color: 'white', // White text color
+  },
+  // Additional styles for the table
+  tableContainer: {
+    backgroundColor: '#0089FF',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 0,
+  },
+  tableHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  tableRow: {
+    marginBottom: 0,
+  },
+  tableCell: {
+    fontSize: 14,
+    color: 'white',
+  },
+
+
 });
 
 export default MyWaterIntakeScreen;
