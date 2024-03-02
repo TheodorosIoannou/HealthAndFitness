@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const MyRunningScreen = () => {
-  const [runningGoal, setRunningGoal] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
-  const handleSetRunningGoal = () => {
-    // Implement logic to set running goal
+  const [currentDate, setCurrentDate] = useState(new Date()); // Add this line
+  const [distanceCovered, setDistanceCovered] = useState(0);
+
+  const handleStartRunning = () => {
+    // Implement logic to start running and update distance covered
+    // For now, let's just increase the distance by 1 km
+    setDistanceCovered(distanceCovered + 1);
   };
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -34,13 +39,17 @@ const MyRunningScreen = () => {
             }}
             onDateChange={(date) => setSelectedDate(date)}
           />
-          <Text></Text>
-          <View style={styles.flexContainer}>
-         {/* Add Running Tracker Section */}
-          
+          <View style={styles.centerContainer}>
+            <Text style={styles.runningSection}>
+              <Icon name="chevron-left" style={{ color: 'white' }} /> {currentDate.toDateString()}  <Icon name="chevron-right" style={{ color: 'white' }} />
+            </Text>
+            <TouchableOpacity style={styles.addButton} onPress={handleStartRunning} > 
+              <Icon name="play" style={{ ...styles.startButtonIcon, color: 'white' }} />
+            </TouchableOpacity> 
+            <Text style={styles.body}> Begin</Text>
+            <Text style={styles.distanceCoveredfont}> {distanceCovered} km</Text>
           </View>
         </View>
-
         {/* Running Analysis Section */}
         <View style={[styles.goalSection, styles.grayBackground]}>
           <Text style={[styles.heading, { textAlign: 'center', alignSelf: 'center', textDecorationLine: 'underline' }]}>Analysis</Text>
@@ -68,6 +77,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 10,
+  },
+  runningSection: {
+    color:'white',
+    justifyContent:'center',
+    alignItems: 'center',
+    paddingBottom:10
   },
   goalSection: {
     marginBottom: 20,
@@ -115,9 +130,9 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: '#FF9900',
-    borderRadius: 20,
-    width: 40,
-    height: 40,
+    borderRadius: 40,
+    width: 60,
+    height: 60,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -136,11 +151,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     flex: 1,
+    padding: 10
   },
   centerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 10,
+    paddingTop: 10
   },
+  distanceCoveredfont:{
+    color: 'white',
+    fontSize: 30,
+
+  }
 });
 
 export default MyRunningScreen;

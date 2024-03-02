@@ -69,30 +69,31 @@ const MyWaterIntakeScreen = () => {
             setError(''); // Clear the error when user starts typing
           }}
         />
+
         <Button
           title="Log Water"
           onPress={handleLogWater}
           color="#FF7E08"
-                    style={styles.logButton}
+          style={styles.logButton}
 
         />
         {loading && <View style={styles.loadingOverlay} />}
         {error !== '' && <Text style={styles.errorText}>{error}</Text>}
-      
-      {/* Display tips in a table-like structure */}
-      <View style={styles.tableContainer}>
-        <Text style={styles.tableHeader}>Tips:</Text>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}> A normal glass of water equals to 240 ml.</Text>
-        </View>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableCell}> A small bottle of water equals to 250 ml.</Text>
-        </View>
-      </View>
-      </View>
-       
 
-          
+        {/* Display tips in a table-like structure */}
+        <View style={styles.tableContainer}>
+          <Text style={styles.tableHeader}>Tips:</Text>
+          <View style={styles.tableRow}>
+            <Text style={styles.tableCell}> A normal glass of water equals to 240 ml.</Text>
+          </View>
+          <View style={styles.tableRow}>
+            <Text style={styles.tableCell}> A small bottle of water equals to 250 ml.</Text>
+          </View>
+        </View>
+      </View>
+
+
+
 
       {/* Display logged water intake */}
       <View style={styles.sectionContainer}>
