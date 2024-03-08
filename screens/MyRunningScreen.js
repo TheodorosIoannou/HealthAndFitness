@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -9,9 +9,12 @@ const MyRunningScreen = () => {
   const [distanceCovered, setDistanceCovered] = useState(0);
 
   const handleStartRunning = () => {
-    // Implement logic to start running and update distance covered
-    // For now, let's just increase the distance by 1 km
-    setDistanceCovered(distanceCovered + 1);
+      // Open maps logic
+      // For now, let's open Google Maps with a default location (you can replace it with your desired location)
+      const latitude = 37.7749;
+      const longitude = -122.4194;
+      const url = `https://www.google.com/maps/place/${latitude},${longitude}`;
+      Linking.openURL(url);
   };
 
 
