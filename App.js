@@ -6,19 +6,17 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerActions } from '@react-navigation/native';
-import '@fortawesome/fontawesome-free/css/all.css';
 
 import DashboardScreen from './screens/DashboardScreen';
 import MyRunningScreen from './screens/MyRunningScreen';
 import MyGoalsScreen from './screens/MyGoalsScreen';
 import MyRewardsScreen from './screens/MyRewardsScreen';
 import MyWaterIntakeScreen from './screens/MyWaterIntakeScreen';
-import Map from './screens/Map';
+import MapScreen from './screens/Map';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-// Custom header component
 const CustomHeader = ({ navigation }) => (
   <TouchableOpacity
     activeOpacity={0.5}
@@ -101,8 +99,7 @@ function MyRunningStack({ navigation }) {
           ),
         }}
       />
-
-<Stack.Screen name="Map" component={Map} />
+      <Stack.Screen name="Map" component={MapScreen} />
     </Stack.Navigator>
   );
 }
@@ -116,7 +113,7 @@ function MyWaterIntakeStack({ navigation }) {
       }}
     >
       <Stack.Screen
-        name="DashboardStack"
+        name="MyWaterIntakeStack"
         component={MyWaterIntakeScreen}
         options={{
           headerShown: true,
@@ -156,6 +153,7 @@ function MyRewardsStack({ navigation }) {
     </Stack.Navigator>
   );
 }
+
 export default function App() {
   return (
     <NavigationContainer>
