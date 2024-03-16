@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Image, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import route1 from '../icons/route.png';
 
-const MyRunningScreen = ({navigation}) => {
-  const [selectedDate, setSelectedDate] = useState('');
+
+const MyRunningScreen = ({navigation, route}) => {
   const currentDate = new Date().toDateString();
   const [distanceCovered, setDistanceCovered] = useState(0);
-
+  const [realTimeDistance, setRealTimeDistance] = useState(distance);
+  const [realTimeCalories, setRealTimeCalories] = useState(calories);
+  
   const handleStartRunning = () => {
     navigation.navigate('Map'); // Navigate to the Map screen 
   };
@@ -17,53 +20,52 @@ const MyRunningScreen = ({navigation}) => {
     setDistanceCovered(newDistance);
   };
 
+  const { distance = '0', calories = '0' } = route.params || {};
+
+  useEffect(() => {
+    if(route.params) {
+      const { distance, calories } = route.params;
+      setRealTimeDistance(distance);
+      setRealTimeCalories(calories);
+    }
+  }, [route.params]);
+  
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}> <Icon name="running" size={20} color="black" /> My Running</Text>
+      <Text style={styles.title}><Icon name="running" size={20} color="black" /> My Running</Text>
           <View style={[styles.goalSection, styles.greenBackground]}>
-            <DatePicker
-              style={{ width: '100%', backgroundColor: 'grey', borderRadius: 20 }}
-              date={selectedDate}
-              mode="date"
-              placeholder="Select date"
-              format="YYYY-MM-DD"
-              minDate="2022-01-01"
-              maxDate="2025-12-31"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              customStyles={{
-                dateInput: {
-                  borderWidth: 0,
-                  borderBottomWidth: 1,
-                  borderBottomColor: 'white',
-                },
-              }}
-              onDateChange={(date) => setSelectedDate(date)}
-            />
+            
             <View style={styles.centerContainer}>
               <Text style={styles.runningSection}>
               <Icon name="chevron-left" style={{ color: 'white' }} /> {currentDate}  <Icon name="chevron-right" style={{ color: 'white' }} />
               </Text>
               <TouchableOpacity style={styles.addButton} onPress={handleStartRunning}>
-                <Icon name="play" style={{ ...styles.startButtonIcon, color: 'white' }} />
+                <Icon name="play" size={25} style={{ ...styles.startButtonIcon, color: 'white'}} />
               </TouchableOpacity>
-              <Text style={styles.body}> Begin</Text>
-<Text style={styles.distanceCoveredfont}> {distanceCovered} km</Text>
+              <Text style={styles.heading}> Begin</Text>
+       
+      <Image source={route1} style={{ width: 150, height: 150 }} />
+    
             </View>
           </View>
          {/* Running Analysis Section */}
-        <View style={[styles.goalSection, styles.grayBackground]}>
-          <Text style={[styles.heading, { textAlign: 'center', alignSelf: 'center', textDecorationLine: 'underline' }]}>Analysis</Text>
-          <Text style={[styles.heading, { textAlign: 'left' }]}> This week</Text>
-          <View style={styles.analysisContainer}>
-            <Text style={styles.body}>Running Goal: </Text>
-            <View style={styles.iconContainer}>
-              <Icon name="chart-bar" size={40} color="white" />
-              <Icon name="running" size={40} color="white" />
-            </View>
-          </View>
-        </View>
-    </ScrollView>
+<View style={[styles.goalSection, styles.grayBackground, { alignItems: 'center', justifyContent: 'center' }]}>
+  <Text style={[styles.heading, { textDecorationLine: 'underline' }]}>Analysis</Text>
+  
+  {/* Displaying the passed metrics - Distance */}
+  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', marginVertical: 10 }}>
+    <Text style={[styles.heading, { textAlign: 'center', marginHorizontal: 10 }]}>{realTimeDistance} KM</Text>
+    <Icon name="route" size={40} color="#fff" />
+  </View>
+
+  {/* Calories Text with Icon */}
+  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100', marginVertical: 10 }}>
+    <Text style={[styles.heading, { textAlign: 'center', marginHorizontal: 10 }]}>{realTimeCalories} KCAL</Text>
+    <Icon name="fire" size={40} color="#fff" />
+  </View>
+</View>
+
+  </ScrollView>
   );
 };
 
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 18,
     fontWeight: 'bold',
+    paddingBottom: 20
   },
   container: {
     flex: 1,
@@ -82,7 +85,7 @@ const styles = StyleSheet.create({
     color: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 10,
+    paddingBottom: 20,
   },
   goalSection: {
     marginBottom: 20,
@@ -99,14 +102,14 @@ const styles = StyleSheet.create({
   centerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
+    padding: 0,
     paddingTop: 10,
   },
   addButton: {
     backgroundColor: '#FF9900',
-    borderRadius: 40,
-    width: 60,
-    height: 60,
+    borderRadius: 60,
+    width: 90,
+    height: 90,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -12,7 +12,7 @@ import MyRunningScreen from './screens/MyRunningScreen';
 import MyGoalsScreen from './screens/MyGoalsScreen';
 import MyRewardsScreen from './screens/MyRewardsScreen';
 import MyWaterIntakeScreen from './screens/MyWaterIntakeScreen';
-import MapScreen from './screens/Map';
+import MapScreen from './screens/RunningTracker';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -87,7 +87,7 @@ function MyRunningStack({ navigation }) {
       }}
     >
       <Stack.Screen
-        name="MyRunningStack"
+        name="MyRunningScreen"
         component={MyRunningScreen}
         options={{
           headerShown: true,
