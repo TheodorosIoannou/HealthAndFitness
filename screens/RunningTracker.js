@@ -1,28 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import { FontAwesome5, MaterialCommunityIcons, MaterialIcons } from 'react-native-vector-icons';
-import { Stopwatch } from 'react-native-stopwatch-timer';
 import { createStackNavigator } from '@react-navigation/stack';
 import haversine from 'haversine';
 import MyRunningScreen from './MyRunningScreen'; // adjust the import paths as needed
-
 
 const Stack = createStackNavigator();
 
 const RunningTrackerScreen = ({ navigation }) => {
   const [currentPosition, setCurrentPosition] = useState(null);
   const [coordinates, setCoordinates] = useState([]);
-  const [isStopwatchStart, setIsStopwatchStart] = useState(false);
-  const [resetStopwatch, setResetStopwatch] = useState(false);
-  const stopwatchRef = useRef();
-  const [distance, setDistance] = useState(0); // Distance in kilometers
-  const [calories, setCalories] = useState(0); // Calories burned
-  const userWeight = 68; // Example user weight in kg. Use dynamic user input in real application.
+  const [isRunning, setIsRunning] = useState(false);
+  const [timer, setTimer] = useState(0); // Custom timer state
+  const [distance, setDistance] = useState(0);
+  const [calories, setCalories] = useState(0);
+  const userWeight = 68; // Example user weight in kg. Use dynamic user input in real applications.
 
-  const [stopwatchTime, setStopwatchTime] = useState('00:00:00'); // Initialize with 00:00:00 or the initial time
-
-  
   const region = {
     latitude: 37.78,
     longitude: -122.43,
@@ -32,15 +26,16 @@ const RunningTrackerScreen = ({ navigation }) => {
 
   useEffect(() => {
     let interval = null;
-    if (isStopwatchStart) {
+    if (isRunning) {
       interval = setInterval(() => {
+        setTimer(prevTimer => prevTimer + 1); // Increment timer every second
         calculateMetrics();
-      }, 1000); // Recalculates every second while the stopwatch is running.
-    } else if (!isStopwatchStart && interval) {
+      }, 1000);
+    } else if (!isRunning && interval) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isStopwatchStart, coordinates]);
+  }, [isRunning, coordinates]);
 
   const calculateMetrics = () => {
     if (coordinates.length > 1) {
@@ -49,18 +44,15 @@ const RunningTrackerScreen = ({ navigation }) => {
         return acc + haversine(src[idx - 1], curr, { unit: 'km' });
       }, 0);
       setDistance(totalDistance);
-  
+
       if (totalDistance > 0) {
-        // The simplified calculation; assuming 60 calories per km as a base
-        // Then adjust slightly by weight; this is very approximate
         const averageCaloriesPerKm = 60;
-        const weightAdjustmentFactor = userWeight / 68; // Adjust based on comparison to example weight
+        const weightAdjustmentFactor = userWeight / 68;
         const caloriesBurned = totalDistance * averageCaloriesPerKm * weightAdjustmentFactor;
         setCalories(Math.round(caloriesBurned));
       }
     }
   };
-  
 
   const handlePositionChange = (event) => {
     const { latitude, longitude } = event.nativeEvent.coordinate;
@@ -69,44 +61,48 @@ const RunningTrackerScreen = ({ navigation }) => {
   };
 
   const handleStart = () => {
-    setIsStopwatchStart(true);
-    setResetStopwatch(false);
+    setIsRunning(true);
   };
 
   const handlePause = () => {
-    setIsStopwatchStart(false);
+    setIsRunning(false);
   };
 
+  // Modified handleStop to use custom timer implementation
   const handleStop = () => {
-    setIsStopwatchStart(false);
-    setResetStopwatch(true);
+    setIsRunning(false);
+    // Format the timer to HH:MM:SS for display
+    const hours = Math.floor(timer / 3600);
+    const minutes = Math.floor((timer % 3600) / 60);
+    const seconds = timer % 60;
+    const formattedTime = [hours, minutes, seconds].map(unit => String(unit).padStart(2, '0')).join(':');
+
+    navigation.navigate('MyRunningScreen', {
+      distance: distance.toFixed(2),
+      calories: calories,
+      stopwatch: formattedTime, // Uses the custom timer
+    });
+
+    // Reset states
+    setTimer(0); // Reset custom timer
     setCoordinates([]);
     setCurrentPosition(null);
-    navigation.navigate('MyRunningScreen', { 
-      distance: distance.toFixed(2), // Assuming you have a route named 'MyRunningScreen'
-      calories: calories,
-    });
-  
     setDistance(0);
     setCalories(0);
   };
+
   return (
     <Stack.Navigator initialRouteName="RunningTrackerScreen">
       <Stack.Screen name="Running Tracker " options={{ headerShown: false }}>
         {() => (
           <View style={styles.container}>
             <View style={styles.topContainer}>
-              <View style={styles.timerContainer }>
-                <Stopwatch 
-                  ref={stopwatchRef}
-                  laps
-                  msecs
-                  start={isStopwatchStart}
-                  reset={resetStopwatch}
-                />
-                  <View style={styles.metricsContainer}>
+              <View style={styles.timerContainer}>
+                {/* Timer Display */}
+                <Text style={styles.timerText}>{new Date(timer * 1000).toISOString().substr(11, 8)}</Text>
+                <View style={styles.metricsContainer}>
                   <Text style={{ color: 'white' }}><MaterialIcons name="directions-run" size={18} color={'white'} /> {distance.toFixed(2)} KM</Text>
-                  <Text style={{ color: 'white' }}><MaterialIcons name="local-fire-department" size={18} color={'white'} />  {calories}  CAL</Text>
+                  <Text style={{ color: 'white' }}><MaterialIcons name="local-fire-department" size={18} color={'white'} /> {calories} CAL</Text>
                 </View>
               </View>
             </View>
@@ -141,25 +137,28 @@ const RunningTrackerScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-
   },
   topContainer: {
     backgroundColor: '#3C3C3C',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
-    
   },
   timerContainer: {
+    marginVertical: 20,
     backgroundColor: '#3C3C3C',
     borderRadius: 10,
-    padding: 0,
+    padding: 10,
+  },
+  timerText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   metricsContainer: {
-    alignItems: 'center', 
+    alignItems: 'center',
     marginTop: 10,
-    color:'white'
+    color: 'white',
   },
   map: {
     flex: 3,

@@ -1,90 +1,74 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, TouchableOpacity, StyleSheet, ScrollView, Linking } from 'react-native';
-import DatePicker from 'react-native-datepicker';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { View, Image, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5'; // Ensure you have FontAwesome5 loaded
 import route1 from '../icons/route.png';
 
-
-const MyRunningScreen = ({navigation, route}) => {
-  const currentDate = new Date().toDateString();
-  const [distanceCovered, setDistanceCovered] = useState(0);
-  const [realTimeDistance, setRealTimeDistance] = useState(distance);
-  const [realTimeCalories, setRealTimeCalories] = useState(calories);
-  
-  const handleStartRunning = () => {
-    navigation.navigate('Map'); // Navigate to the Map screen 
-  };
-
-
-  const updateDistanceCovered = (newDistance) => {
-    setDistanceCovered(newDistance);
-  };
-
-  const { distance = '0', calories = '0' } = route.params || {};
+const MyRunningScreen = ({ navigation, route }) => {
+  const currentDate = new Date().toLocaleDateString();
+  const [realTimeDistance, setRealTimeDistance] = useState('0');
+  const [realTimeCalories, setRealTimeCalories] = useState('0');
+  const [realTimeTime, setRealTimeTime] = useState('00:00:00');
 
   useEffect(() => {
-    if(route.params) {
-      const { distance, calories } = route.params;
+    if (route.params) {
+      const { distance, calories, stopwatch } = route.params;
       setRealTimeDistance(distance);
       setRealTimeCalories(calories);
+      setRealTimeTime(stopwatch); 
     }
   }, [route.params]);
-  
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}><Icon name="running" size={20} color="black" /> My Running</Text>
-          <View style={[styles.goalSection, styles.greenBackground]}>
-            
-            <View style={styles.centerContainer}>
-              <Text style={styles.runningSection}>
-              <Icon name="chevron-left" style={{ color: 'white' }} /> {currentDate}  <Icon name="chevron-right" style={{ color: 'white' }} />
-              </Text>
-              <TouchableOpacity style={styles.addButton} onPress={handleStartRunning}>
-                <Icon name="play" size={25} style={{ ...styles.startButtonIcon, color: 'white'}} />
-              </TouchableOpacity>
-              <Text style={styles.heading}> Begin</Text>
-       
-      <Image source={route1} style={{ width: 150, height: 150 }} />
-    
-            </View>
+      <Text style={styles.title}>
+        <Icon name="running" size={20} color="black" /> My Running
+      </Text>
+      <View style={[styles.goalSection, styles.greenBackground]}>
+        <View style={styles.centerContainer}>
+          <Text style={styles.runningSection}>
+            <Icon name="chevron-left" style={{ color: 'white' }} /> {currentDate} <Icon name="chevron-right" style={{ color: 'white' }} />
+          </Text>
+          <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate('Map')}> 
+            <Icon name="play" size={25} style={{ ...styles.startButtonIcon, color: 'white' }} />
+          </TouchableOpacity>
+          <Text style={styles.heading}> Begin</Text>
+          <Image source={route1} style={{ width: 150, height: 150 }} />
+        </View>
+      </View>
+      {/* Running Analysis Section - Modified for horizontal layout */}
+      <View style={[styles.goalSection, styles.grayBackground]}>
+        <Text style={[styles.heading, { textDecorationLine: 'underline', marginBottom: 20 }]}>Analysis</Text>
+        <View style={styles.analysisContainer}>
+          <View style={styles.analysisItem}>
+            <Icon name="clock" size={25} color="#fff" />
+            <Text style={styles.analysisText}>{realTimeTime}</Text>
           </View>
-         {/* Running Analysis Section */}
-<View style={[styles.goalSection, styles.grayBackground, { alignItems: 'center', justifyContent: 'center' }]}>
-  <Text style={[styles.heading, { textDecorationLine: 'underline' }]}>Analysis</Text>
-  
-  {/* Displaying the passed metrics - Distance */}
-  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', marginVertical: 10 }}>
-    <Text style={[styles.heading, { textAlign: 'center', marginHorizontal: 10 }]}>{realTimeDistance} KM</Text>
-    <Icon name="route" size={40} color="#fff" />
-  </View>
-
-  {/* Calories Text with Icon */}
-  <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100', marginVertical: 10 }}>
-    <Text style={[styles.heading, { textAlign: 'center', marginHorizontal: 10 }]}>{realTimeCalories} KCAL</Text>
-    <Icon name="fire" size={40} color="#fff" />
-  </View>
-</View>
-
-  </ScrollView>
+          <View style={styles.separator} />
+          <View style={styles.analysisItem}>
+            <Icon name="route" size={25} color="#fff" />
+            <Text style={styles.analysisText}>{realTimeDistance} KM</Text>
+          </View>
+          <View style={styles.separator} />
+          <View style={styles.analysisItem}>
+            <Icon name="fire" size={25} color="#fff" />
+            <Text style={styles.analysisText}>{realTimeCalories} KCAL</Text>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  title: {
-    color: 'black',
-    fontSize: 18,
-    fontWeight: 'bold',
-    paddingBottom: 20
-  },
   container: {
     flex: 1,
     justifyContent: 'center',
     padding: 10,
   },
-  runningSection: {
-    color: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
+  title: {
+    color: 'black',
+    fontSize: 18,
+    fontWeight: 'bold',
     paddingBottom: 20,
   },
   goalSection: {
@@ -99,11 +83,34 @@ const styles = StyleSheet.create({
   grayBackground: {
     backgroundColor: '#949494',
   },
+  analysisContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  analysisItem: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  analysisText: {
+    color: 'white',
+    marginTop: 5,
+    fontSize: 16,
+  },
+  separator: {
+    height: '100%',
+    width: 1,
+    backgroundColor: '#FFF',
+    marginHorizontal: 20,
+  },
   centerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 0,
-    paddingTop: 10,
+  },
+  runningSection: {
+    color: 'white',
+    fontSize: 16,
+    marginBottom: 10,
   },
   addButton: {
     backgroundColor: '#FF9900',
@@ -112,38 +119,12 @@ const styles = StyleSheet.create({
     height: 90,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
+    marginBottom: 20,
   },
   heading: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  body: {
-    color: 'white',
-    fontSize: 14,
-    marginBottom: 10,
-  },
-  distanceCoveredfont: {
-    color: 'white',
-    fontSize: 30,
-  },
-  analysisContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  iconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    flex: 1,
-    padding: 10,
   },
 });
 
