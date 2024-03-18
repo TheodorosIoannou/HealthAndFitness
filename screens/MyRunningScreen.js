@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, Image, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5'; // Ensure you have FontAwesome5 loaded
 import route1 from '../icons/route.png';
+import { useRunningContext } from '../contexts/RunningContext';
+
 
 const MyRunningScreen = ({ navigation, route }) => {
   const currentDate = new Date().toLocaleDateString();
   const [realTimeDistance, setRealTimeDistance] = useState('0');
   const [realTimeCalories, setRealTimeCalories] = useState('0');
   const [realTimeTime, setRealTimeTime] = useState('00:00:00');
+  const { runningData, setRunningData } = useRunningContext();
 
   useEffect(() => {
     if (route.params) {
@@ -15,8 +18,10 @@ const MyRunningScreen = ({ navigation, route }) => {
       setRealTimeDistance(distance);
       setRealTimeCalories(calories);
       setRealTimeTime(stopwatch); 
+      setRunningData({ distance, calories, time: stopwatch });
+
     }
-  }, [route.params]);
+  }, [route.params, setRunningData]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -82,6 +87,8 @@ const styles = StyleSheet.create({
   },
   grayBackground: {
     backgroundColor: '#949494',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   analysisContainer: {
     flexDirection: 'row',

@@ -1,26 +1,18 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useRunningContext } from '../contexts/RunningContext';
+import { useWaterIntakeContext } from '../contexts/WaterIntakeContext'; 
 
 const DashboardScreen = () => {
+  const { runningData } = useRunningContext();
+  const {  totalWaterGoal, calculateTotalWaterConsumed } = useWaterIntakeContext(); // Use the WaterIntakeContext
+
   return (
     <ScrollView contentContainerStyle={styles.title}>
       <Text style={styles.title}> <Icon name="tachometer-alt" size={20} color="black" /> Dashboard</Text>
       <ScrollView contentContainerStyle={styles.container}>
-      <View style={[styles.sectionContainer, { backgroundColor: '#EF583F' }]}>
-        <View style={styles.iconContainer}>
-          <Icon name="check" size={40} color="white" />
-        </View>
-        {/* Add components for my goals */}
-        <Text style={styles.sectionTitle}>Goals</Text>
-        <Text style={styles.sectionBody}>Running:</Text>
-        <Text style={styles.sectionBody}>15/35 km</Text>
-        <Text></Text>
-        <Text style={styles.sectionBody}>Water Intake:</Text>
-        <Text style={styles.sectionBody}>50% Till now</Text>
-        <Text></Text>
-        <Text style={styles.sectionBody}>This section provides to the user Goals details</Text>
-      </View>
+     
 
       <View style={[styles.sectionContainer, { backgroundColor: '#005425' }]}>
         <View style={styles.iconContainer}>
@@ -28,28 +20,27 @@ const DashboardScreen = () => {
         </View>
         {/* Add components for running goals */}
         <Text style={styles.sectionTitle}>Running</Text>
-        <Text style={styles.sectionBody}>Total Distance Run:</Text>
-        <Text style={styles.sectionTitle}>35 km</Text>
-        <Text></Text>
-        <Text style={styles.sectionBody}>This section provides to the user running details</Text>
+          <Text style={styles.sectionBody}>Distance: {runningData.distance} KM</Text>
+          <Text style={styles.sectionBody}>Calories: {runningData.calories} KCAL</Text>
+          <Text style={styles.sectionBody}>Time: {runningData.time}</Text>
       </View>
 
       <View style={[styles.sectionContainer, { backgroundColor: '#0089FF' }]}>
         <View style={styles.iconContainer}>
           <Icon name="tint" size={40} color="white" />
         </View>
-        {/* Add components for water intake */}
+        {/* Add components for water intake */}      
+       
         <Text style={styles.sectionTitle}>Water Intake</Text>
-        <Text style={styles.sectionBody}>Total Water Consumed:</Text>
-        <Text style={styles.sectionTitle}>200 L</Text>
-        <Text></Text>
-        <Text style={styles.sectionBody}>This section provides to the user running details</Text>
+        <Text style={styles.sectionBody}>Total Water Consumed: {calculateTotalWaterConsumed()} ml</Text>
+        <Text style={styles.sectionBody}>Goal: {totalWaterGoal} ml</Text>
       </View>
+      
 
       <View
         style={[
           styles.sectionContainer,
-          { backgroundColor: '#4C0096', marginBottom: 20 },
+          { backgroundColor: '#4C0096', marginBottom: 0 },
         ]}
       >
         <View style={styles.iconContainer}>
@@ -63,6 +54,24 @@ const DashboardScreen = () => {
         <Text></Text>
         <Text style={styles.sectionBody}>This section provides to the user rewards details</Text>
       </View>
+
+      <View style={[styles.sectionContainer, { backgroundColor: '#EF583F', marginBottom: 40 }]}>
+        <View style={styles.iconContainer}>
+          <Icon name="check" size={40} color="white" />
+        </View>
+        
+        {/* Add components for my goals */}
+        <Text style={styles.sectionTitle}>Goals</Text>
+        <Text style={styles.sectionBody}>Running:</Text>
+        <Text style={styles.sectionBody}>15/35 km</Text>
+        <Text></Text>
+        <Text style={styles.sectionBody}>Water Intake:</Text>
+        <Text style={styles.sectionBody}>50% Till now</Text>
+        <Text></Text>
+        <Text style={styles.sectionBody}>This section provides to the user Goals details</Text>
+      </View>
+
+      
     </ScrollView>
     </ScrollView>
   );

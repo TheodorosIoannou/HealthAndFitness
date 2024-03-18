@@ -123,22 +123,21 @@ const MyWaterIntakeScreen = () => {
         </Text>
       </View>
 
-      {/* Analysis Section */}
       <View style={styles.analysisContainer}>
         <Text style={styles.analysisTitle}>Analysis</Text>
         <View style={styles.analysisInfoContainer}>
           <View style={styles.analysisInfo}>
-            <Text style={styles.analysisLabel}>Intake:</Text>
+            <Icon name="tint" size={25} color="#fff" />
             <Text style={styles.analysisValue}>{`${calculateTotalWaterConsumed()} ml`}</Text>
           </View>
           <View style={styles.separator} />
           <View style={styles.analysisInfo}>
-            <Text style={styles.analysisLabel}>Target:</Text>
+            <Icon name="bullseye"size={25} color="#fff" />
             <Text style={styles.analysisValue}>{`${totalWaterGoal} ml`}</Text>
           </View>
           <View style={styles.separator} />
           <View style={styles.analysisInfo}>
-            <Text style={styles.analysisLabel}>Percentage:</Text>
+            <Icon name="percentage" size={25} color="#fff" />
             <Text style={styles.analysisValue}>{`${calculateProgress()}%`}</Text>
           </View>
         </View>
@@ -146,6 +145,7 @@ const MyWaterIntakeScreen = () => {
     </ScrollView>
   );
 };
+  
 
 const styles = StyleSheet.create({
   container: {
@@ -245,13 +245,9 @@ const styles = StyleSheet.create({
 
   // Additional styles for the Analysis Section
   analysisContainer: {
-    backgroundColor: '#444444', // Darker grey background color
+    backgroundColor: '#949494', 
     borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'black', // Black thin outline
+    
   },
   analysisTitle: {
     fontSize: 20,
@@ -265,10 +261,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
+    marginBottom: 5,
   },
   analysisInfo: {
-    alignItems: 'center',
-  },
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 5,
+    },
   analysisLabel: {
     fontSize: 16,
     color: 'white', // White text color
