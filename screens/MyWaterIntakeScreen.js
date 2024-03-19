@@ -1,55 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, ScrollView, Button, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import LinearGradient from 'react-native-linear-gradient';
+import { useWaterIntakeContext } from '../contexts/WaterIntakeContext'; 
 
 const MyWaterIntakeScreen = () => {
-  const [waterIntake, setWaterIntake] = useState('');
-  const [waterLog, setWaterLog] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const {
+    waterIntake,
+    setWaterIntake,
+    waterLog,
+    loading,
+    error,
+    handleLogWater,
+    handleDeleteLog,
+    calculateTotalWaterConsumed,
+    calculateProgress,
+    totalWaterGoal, 
+    setError 
+} = useWaterIntakeContext(); 
 
-
-  const totalWaterGoal = 2000; // Set your daily water intake goal in ml
-
-  const handleLogWater = () => {
-    if (waterIntake.trim() === '') {
-      alert('Please enter water intake');
-      return;
-    }
-
-    const enteredIntake = parseInt(waterIntake);
-
-    if (enteredIntake > totalWaterGoal) {
-      setError('Entered intake exceeds the goal');
-      return;
-    }
-
-    setLoading(true);
-
-    // Simulate an asynchronous operation (e.g., API call) to log water intake
-    setTimeout(() => {
-      setWaterLog([...waterLog, { amount: parseInt(waterIntake), date: new Date() }]);
-      setWaterIntake('');
-      setLoading(false);
-    }, 1000); // Adjust the delay as needed
-  };
-
-  const handleDeleteLog = (index) => {
-    const updatedLogs = [...waterLog];
-    updatedLogs.splice(index, 1);
-    setWaterLog(updatedLogs);
-  };
-
-  const calculateTotalWaterConsumed = () => {
-    return waterLog.reduce((total, log) => total + log.amount, 0);
-  };
-
-  const calculateProgress = () => {
-    const consumed = calculateTotalWaterConsumed();
-    return Math.min((consumed / totalWaterGoal) * 60, 60); // Ensure progress does not exceed 100%
-
-  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
