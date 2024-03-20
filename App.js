@@ -15,6 +15,7 @@ import MyWaterIntakeScreen from './screens/MyWaterIntakeScreen';
 import MapScreen from './screens/RunningTracker';
 import { RunningProvider } from './contexts/RunningContext';
 import { WaterIntakeProvider } from './contexts/WaterIntakeContext';
+import { RewardsProvider } from "./contexts/RewardsContext";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -159,68 +160,70 @@ function MyRewardsStack({ navigation }) {
 export default function App() {
   return (
     <NavigationContainer>
-      <WaterIntakeProvider>
       <RunningProvider>
-        <Drawer.Navigator
-          screenOptions={{
-            headerShown: false,
-            drawerActiveBackgroundColor: '#f00e1ff',
-            drawerActiveTintColor: '#497D00',
-            drawerStyle: { backgroundColor: '#ccc' },
-          }}
-        >
-          <Drawer.Screen
-            name="Dashboard"
-            component={DashboardStack}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <Ionicons name="bar-chart-outline" color={color} size={size} />
-              ),
-            }}
-          />
+        <WaterIntakeProvider>
+          <RewardsProvider>
+            <Drawer.Navigator
+              screenOptions={{
+                headerShown: false,
+                drawerActiveBackgroundColor: '#f00e1ff',
+                drawerActiveTintColor: '#497D00',
+                drawerStyle: { backgroundColor: '#ccc' },
+              }}
+            >
+              <Drawer.Screen
+                name="Dashboard"
+                component={DashboardStack}
+                options={{
+                  drawerIcon: ({ color, size }) => (
+                    <Ionicons name="bar-chart-outline" color={color} size={size} />
+                  ),
+                }}
+              />
 
-          <Drawer.Screen
-            name="MyGoals"
-            component={MyGoalsStack}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <Ionicons name="create-outline" color={color} size={size} />
-              ),
-            }}
-          />
+              <Drawer.Screen
+                name="MyGoals"
+                component={MyGoalsStack}
+                options={{
+                  drawerIcon: ({ color, size }) => (
+                    <Ionicons name="create-outline" color={color} size={size} />
+                  ),
+                }}
+              />
 
-          <Drawer.Screen
-            name="MyRunning"
-            component={MyRunningStack}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <Ionicons name="walk-outline" color={color} size={size} />
-              ),
-            }}
-          />
+              <Drawer.Screen
+                name="MyRunning"
+                component={MyRunningStack}
+                options={{
+                  drawerIcon: ({ color, size }) => (
+                    <Ionicons name="walk-outline" color={color} size={size} />
+                  ),
+                }}
+              />
 
-          <Drawer.Screen
-            name="MyWaterIntake"
-            component={MyWaterIntakeStack}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <Ionicons name="water-outline" color={color} size={size} />
-              ),
-            }}
-          />
+              <Drawer.Screen
+                name="MyWaterIntake"
+                component={MyWaterIntakeStack}
+                options={{
+                  drawerIcon: ({ color, size }) => (
+                    <Ionicons name="water-outline" color={color} size={size} />
+                  ),
+                }}
+              />
 
-          <Drawer.Screen
-            name="MyRewards"
-            component={MyRewardsStack}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <Ionicons name="ribbon-outline" color={color} size={size} />
-              ),
-            }}
-          />
-        </Drawer.Navigator>
+              <Drawer.Screen
+                name="MyRewards"
+                component={MyRewardsStack}
+                options={{
+                  drawerIcon: ({ color, size }) => (
+                    <Ionicons name="ribbon-outline" color={color} size={size} />
+                  ),
+                }}
+              />
+            </Drawer.Navigator>
+          </RewardsProvider>
+        </WaterIntakeProvider>
       </RunningProvider>
-      </WaterIntakeProvider>
     </NavigationContainer>
   );
 }

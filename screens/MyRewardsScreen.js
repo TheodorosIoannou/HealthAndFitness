@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { SwiperFlatList } from 'react-native-swiper-flatlist';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useRewards } from '../contexts/RewardsContext';
 
 
 const RunningBadge = ({ name, icon, description }) => (
@@ -22,8 +23,8 @@ const BadgeSlider = ({ badges }) => (
   >
     {badges.map((badge, index) => (
       <View key={index} style={styles.slide}>
-       {/* Add borderRadius style to Image components */}
-       {React.isValidElement(badge) ? (
+        {/* Add borderRadius style to Image components */}
+        {React.isValidElement(badge) ? (
           React.cloneElement(badge, {
             style: [badge.props.style, { borderRadius: 8 }],
           })
@@ -36,17 +37,11 @@ const BadgeSlider = ({ badges }) => (
 );
 
 const AwardedBadgesScreen = () => {
-  const [runningGoal, setRunningGoal] = useState('');
-  const [waterIntakeGoal, setWaterIntakeGoal] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
+  const { awardedBadges } = useRewards(); // This accesses the awarded badges
+  // Filter for running and water badges
+  const runningBadgesAwarded = awardedBadges.filter(badge => badge.description.includes('run'));
+  const waterBadgesAwarded = awardedBadges.filter(badge => badge.description.includes('water'));
 
-  const handleSetRunningGoal = () => {
-    // Implement logic to set running goal
-  };
-
-  const handleSetWaterIntakeGoal = () => {
-    // Implement logic to set water intake goal
-  };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -97,31 +92,43 @@ const AwardedBadgesScreen = () => {
       {/* Analysis Section */}
       <View style={[styles.sectionContainer, styles.grayBackground]}>
         <Text style={[styles.heading, { textAlign: 'center', alignSelf: 'center', textDecorationLine: 'underline' }]}>Analysis</Text>
-        <Text style={[styles.heading, { textAlign: 'left', alignSelf: 'left' }]}>Running Badges Awarded </Text>
-        {/* Add running and water intake badges gained */}
-        <BadgeSlider
-          badges={[
-            <RunningBadge name="5K Beginner" icon="medal" description="Complete a 5km run" />,
-            <Image source={require('../icons/5kmRun.png')} />,
-            <RunningBadge name="10K Pro" icon="medal" description="Complete 10km run" />,
-            <Image source={require('../icons/10kmRun.png')} style={{ alignSelf: 'center' }} />,
-          ]}
-        />
-        <Text style={[styles.heading, { textAlign: 'left', alignSelf: 'left' }]}>Water Intake Badges Awarded </Text>
-        {/* Add water intake badges gained */}
-        <BadgeSlider
-          badges={[
-            <RunningBadge name="Beginner" icon="medal" description="Reach 100L water int" />,
-            <Image source={require('../icons/100LWaterIntake.png')} style={{ alignSelf: 'center' }} />,
-            <RunningBadge name="Pro" icon="medal" description="Reach 200L water int" />,
-            <Image source={require('../icons/200LWaterIntake.png')} style={{ alignSelf: 'center' }} />,
-          ]}
-        />
+      
+        {/* Running Badges Awarded Section */}
+        <Text style={[styles.heading, { textAlign: 'left', alignSelf: 'flex-start' }]}>Running Badges Awarded</Text>
+        {runningBadgesAwarded.length > 0 ? (
+          <BadgeSlider
+            badges={runningBadgesAwarded.map(badge => (
+              <View key={badge.name} style={{ alignItems: 'center' }}>
+                <Text style={styles.badgeText}>{badge.name}</Text>
+                <Text style={styles.badgeDescription}>{badge.description}</Text>
+                <Image source={badge.icon} style={{ width: 100, height: 100 }} />
+              </View>
+            ))}
+          />
+        ) : (
+          <Text style={styles.badgeDescription}>No running badges awarded yet.</Text>
+        )}
+        
+        {/* Water Intake Badges Awarded Section */}
+        <Text style={[styles.heading, { textAlign: 'left', alignSelf: 'flex-start' }]}>Water Intake Badges Awarded</Text>
+        {waterBadgesAwarded.length > 0 ? (
+          <BadgeSlider
+            badges={waterBadgesAwarded.map(badge => (
+              // Assuming WaterIntakeBadge is similar to RunningBadge but potentially with different styling or functionality
+              <View key={badge.name} style={{ alignItems: 'center' }}>
+                <Text style={styles.badgeText}>{badge.name}</Text>
+                <Text style={styles.badgeDescription}>{badge.description}</Text>
+                <Image source={badge.icon} style={{ width: 100, height: 100 }} />
+              </View>
+            ))}
+          />
+        ) : (
+          <Text style={styles.badgeDescription}>No water intake badges awarded yet.</Text>
+        )}
       </View>
     </ScrollView>
   );
-}
-
+};
 const styles = StyleSheet.create({
   slide: {
     flex: 1,

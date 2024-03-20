@@ -3,6 +3,7 @@ import { View, Image, Text, TouchableOpacity, StyleSheet, ScrollView } from 'rea
 import Icon from 'react-native-vector-icons/FontAwesome5'; // Ensure you have FontAwesome5 loaded
 import route1 from '../icons/route.png';
 import { useRunningContext } from '../contexts/RunningContext';
+import { useRewards } from '../contexts/RewardsContext';
 
 
 const MyRunningScreen = ({ navigation, route }) => {
@@ -11,17 +12,32 @@ const MyRunningScreen = ({ navigation, route }) => {
   const [realTimeCalories, setRealTimeCalories] = useState('0');
   const [realTimeTime, setRealTimeTime] = useState('00:00:00');
   const { runningData, setRunningData } = useRunningContext();
+  const { awardBadge } = useRewards();
+
+ 
 
   useEffect(() => {
     if (route.params) {
       const { distance, calories, stopwatch } = route.params;
-      setRealTimeDistance(distance);
+      const parsedDistance = parseFloat(distance);
+
+      setRealTimeDistance(parsedDistance);
       setRealTimeCalories(calories);
       setRealTimeTime(stopwatch); 
-      setRunningData({ distance, calories, time: stopwatch });
-
+      setRunningData({ distance: parsedDistance, calories, time: stopwatch });
+      
+      // Checking if the distance qualifies for a badge
+      if (parsedDistance >= 5) {
+        awardBadge({ name: '5K Beginner', icon: 'medal', description: 'Complete a 5km run', image: require('../icons/5kmRun.png') });
+      }
+      if (parsedDistance >= 10) {
+        awardBadge({ name: '10K Pro', icon: 'medal', description: 'Complete a 10km run', image: require('../icons/10kmRun.png') });
+      }
+      if (parsedDistance >= 15) {
+        awardBadge({ name: '15K Master', icon: 'medal', description: 'Complete a 15km run', image: require('../icons/15kmRun.png') });
+      }
     }
-  }, [route.params, setRunningData]);
+  }, [route.params, setRunningData, awardBadge]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

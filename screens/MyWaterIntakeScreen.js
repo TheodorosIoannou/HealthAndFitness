@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useWaterIntakeContext } from '../contexts/WaterIntakeContext'; 
 
 const MyWaterIntakeScreen = () => {
+  
   const {
     waterIntake,
     setWaterIntake,
@@ -17,7 +18,6 @@ const MyWaterIntakeScreen = () => {
     totalWaterGoal, 
     setError 
 } = useWaterIntakeContext(); 
-
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
